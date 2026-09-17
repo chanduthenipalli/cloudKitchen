@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Deccan Handi — The Dum-Sealed Legacy</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        :root {
+            --maroon: #4a0f1a;
+            --maroon-deep: #2c0810;
+            --maroon-mid: #3a0c15;
+            --gold: #c9962f;
+            --gold-bright: #e6bd63;
+            --gold-soft: #f1d69a;
+            --cream: #f4e9d5;
+            --paper: #faf3e6;
+            --ink: #2a1610;
+            --ink-soft: #5a4033;
+            --line: rgba(74, 15, 26, 0.16);
+        }
+
+        :root:not([data-theme="light"]) {
+            --bg: var(--paper);
+            --surface: #ffffff;
+            --text: var(--ink);
+            --text-soft: var(--ink-soft);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #170f0d;
+                --surface: #211613;
+                --text: #f0e2ce;
+                --text-soft: #cbb59d;
+                --line: rgba(230, 189, 99, 0.22);
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #170f0d;
+            --surface: #211613;
+            --text: #f0e2ce;
+            --text-soft: #cbb59d;
+            --line: rgba(230, 189, 99, 0.22);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Work Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .display {
+            font-family: 'Fraunces', Georgia, serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        ::selection {
+            background: var(--gold-bright);
+            color: var(--maroon-deep);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ---------- SEAL LOADER ---------- */
+
+        #seal {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: radial-gradient(
+                    ellipse 900px 700px at 50% 40%,
+                    var(--maroon-mid),
+                    var(--maroon-deep)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: sealOut 0.7s ease 1.9s forwards;
+        }
+
+        #seal svg {
+            width: 150px;
+            height: 150px;
+        }
+
+        @keyframes sealOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        }
+
+        .steam-line {
+            stroke: var(--gold-bright);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0;
+            animation: steamRise 1.6s ease-in 0.3s infinite;
+        }
+
+        .steam-line.s2 {
+            animation-delay: 0.6s;
+        }
+
+        .steam-line.s3 {
+            animation-delay: 1s;
+        }
+
+        @keyframes steamRise {
+            0% {
+                opacity: 0;
+                transform: translateY(6px) scaleY(0.7);
+            }
+
+            35% {
+                opacity: 0.9;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-14px) scaleY(1.1);
+            }
+        }
+
+        .pot-outline {
+            stroke: var(--gold-bright);
+            stroke-width: 2.4;
+            fill: none;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: draw 1.4s ease forwards 0.1s;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .seal-word {
+            font-family: 'Fraunces', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.3em;
+            color: var(--gold-soft);
+            text-align: center;
+            margin-top: 14px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards 1.1s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- NAV ---------- */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            background: linear-gradient(
+                    180deg,
+                    rgba(44, 8, 16, 0.85),
+                    transparent
+            );
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 2.1s;
+        }
+
+        .nav-mark {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--gold-soft);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            color: var(--cream);
+            text-decoration: none;
+            opacity: 0.85;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: var(--gold-bright);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 560px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(
+                    ellipse 1000px 700px at 50% 0%,
+                    rgba(230, 189, 99, 0.16),
+                    transparent 55%
+            ),
+            linear-gradient(
+                    180deg,
+                    var(--maroon) 0%,
+                    var(--maroon-deep) 100%
+            );
+            color: var(--cream);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 28px 100px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(
+                    rgba(230, 189, 99, 0.5) 0.6px,
+                    transparent 0.6px
+            );
+            background-size: 26px 26px;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .grain-arc {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            border: 1px solid rgba(230, 189, 99, 0.14);
+            top: -420px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .grain-arc.arc2 {
+            width: 1100px;
+            height: 1100px;
+            top: -500px;
+            opacity: 0.7;
+        }
+
+        /* ---------- STEAM ---------- */
+
+        .steam-field {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wisp {
+            position: absolute;
+            width: 2px;
+            height: 120px;
+            background: linear-gradient(
+                    180deg,
+                    transparent,
+                    rgba(230, 189, 99, 0.22),
+                    transparent
+            );
+            border-radius: 2px;
+            transition: transform 0.6s cubic-bezier(.2, .7, .3, 1);
+            filter: blur(1px);
+        }
+
+        /* ---------- HERO CONTENT ---------- */
+
+        .emblem {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 26px;
+            opacity: 0;
+            position: relative;
+            z-index: 1;
+            animation: emblemIn 0.9s cubic-bezier(.2, .8, .2, 1) forwards 2s;
+        }
+
+        @keyframes emblemIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .emblem svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brandmark {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: clamp(2.8rem, 7.5vw, 5.2rem);
+            line-height: 1;
+            color: var(--gold-soft);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 2.25s;
+        }
+
+        .brandmark em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--cream);
+        }
+
+        .kicker {
+            font-size: 0.95rem;
+            color: var(--gold);
+            letter-spacing: 0.16em;
+            margin-top: 16px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 2.45s;
+        }
+
+        .hero-line {
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            margin: 28px auto;
+            opacity: 0.6;
+            animation: lineGrow 0.9s ease forwards 2.6s;
+        }
+
+        @keyframes lineGrow {
+            to {
+                width: 70px;
+            }
+        }
+
+        .tagline {
+            font-size: clamp(1.05rem, 2.3vw, 1.4rem);
+            max-width: 620px;
+            margin: 0 auto;
+            color: var(--cream);
+            opacity: 0;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 1s ease forwards 2.75s;
+        }
+
+        .cta-row {
+            margin-top: 42px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 2.95s;
+        }
+
+        /* ---------- BUTTONS ---------- */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 15px 30px;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: transform 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gold {
+            background: linear-gradient(
+                    135deg,
+                    var(--gold-bright),
+                    var(--gold)
+            );
+            color: var(--maroon-deep);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -8px rgba(230, 189, 99, 0.5);
+        }
+
+        .btn-line {
+            border-color: rgba(230, 189, 99, 0.45);
+            color: var(--cream);
+        }
+
+        .btn-line:hover {
+            border-color: var(--gold-bright);
+            background: rgba(230, 189, 99, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .btn-seal {
+            position: relative;
+        }
+
+        .btn-seal::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 2px;
+            border: 2px solid var(--gold-bright);
+            opacity: 0;
+            transform: scale(1);
+            pointer-events: none;
+        }
+
+        .btn-seal:active::after {
+            animation: sealPress 0.5s ease;
+        }
+
+        .btn-seal:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes sealPress {
+            0% {
+                opacity: 0.9;
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.35);
+            }
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 34px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 3.2s,
+            bob 2.2s ease-in-out infinite 3.2s;
+        }
+
+        @keyframes bob {
+            0%, 100% {
+                transform: translate(-50%, 0);
+            }
+
+            50% {
+                transform: translate(-50%, 8px);
+            }
+        }
+
+        .scroll-cue svg {
+            width: 18px;
+            height: 26px;
+            stroke: var(--gold);
+        }
+
+        /* ---------- REVEAL ---------- */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s ease,
+            transform 0.8s ease;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1.in {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2.in {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3.in {
+            transition-delay: 0.3s;
+        }
+
+        .reveal-delay-4.in {
+            transition-delay: 0.4s;
+        }
+
+        /* ---------- ABOUT ---------- */
+
+        .about {
+            padding: 110px 28px;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .about-inner {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about .eyebrow {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+            margin-bottom: 16px;
+        }
+
+        .about h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 22px;
+        }
+
+        .about p {
+            color: var(--text-soft);
+            font-size: 1.06rem;
+            line-height: 1.85;
+        }
+
+        /* ---------- DISH SHOWCASE ---------- */
+
+        .dish-strip {
+            max-width: 920px;
+            margin: 56px auto 0;
+            display: grid;
+            grid-template-columns:repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .dish-card {
+            text-align: center;
+        }
+
+        .dish-art {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            position: relative;
+            background: radial-gradient(
+                    circle at 35% 30%,
+                    rgba(230, 189, 99, 0.14),
+                    transparent 60%
+            ),
+            var(--surface);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.4s ease,
+            box-shadow 0.4s ease;
+        }
+
+        .dish-card:hover .dish-art {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px -14px rgba(74, 15, 26, 0.35);
+        }
+
+        .dish-art svg {
+            width: 72%;
+            height: 72%;
+        }
+
+        .dish-label {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .dish-strip {
+                grid-template-columns:repeat(3, 1fr);
+                gap: 14px;
+            }
+
+            .dish-label {
+                font-size: 0.82rem;
+            }
+        }
+
+        /* ---------- LIVE TICKER ---------- */
+
+        .dum-ticker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 38px;
+            padding: 10px 20px;
+            border: 1px solid rgba(230, 189, 99, 0.35);
+            border-radius: 30px;
+            font-size: 0.82rem;
+            color: var(--gold-soft);
+            letter-spacing: 0.03em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dum-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #7fd97f;
+            box-shadow: 0 0 0 0 rgba(127, 217, 127, 0.6);
+            animation: dumPulse 1.8s ease-in-out infinite;
+            flex: none;
+        }
+
+        @keyframes dumPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(127, 217, 127, 0.55);
+            }
+
+            70% {
+                box-shadow: 0 0 0 7px rgba(127, 217, 127, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(127, 217, 127, 0);
+            }
+        }
+
+        /* ---------- MENU ---------- */
+
+        .menu {
+            background: var(--surface);
+            padding: 110px 28px 120px;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            position: relative;
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-head .eyebrow {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+        }
+
+        .section-head h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+            margin-top: 10px;
+            color: var(--text);
+        }
+
+        .menu-list {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 20px;
+            padding: 26px 4px;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+            cursor: default;
+            transition: padding-left 0.35s ease,
+            background 0.35s ease;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--gold-bright);
+            transition: width 0.35s ease;
+        }
+
+        .menu-item:hover {
+            padding-left: 20px;
+            background: linear-gradient(
+                    90deg,
+                    rgba(201, 150, 47, 0.06),
+                    transparent 60%
+            );
+        }
+
+        .menu-item:hover::before {
+            width: 3px;
+        }
+
+        .menu-item-name {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--text);
+        }
+
+        .menu-item-desc {
+            color: var(--text-soft);
+            font-size: 0.92rem;
+            margin-top: 6px;
+            line-height: 1.55;
+            max-width: 440px;
+        }
+
+        .menu-item-price {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .spice-tag {
+            display: inline-block;
+            font-size: 0.66rem;
+            letter-spacing: 0.06em;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            padding: 2px 10px;
+            margin-left: 9px;
+            vertical-align: middle;
+            font-weight: 600;
+        }
+
+        /* ---------- SIGNATURE RITUAL ---------- */
+
+        .signature {
+            padding: 110px 28px;
+            background: var(--maroon-deep);
+            color: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signature::after {
+            content: "DUM";
+            position: absolute;
+            right: -50px;
+            bottom: -90px;
+            font-family: 'Fraunces', serif;
+            font-size: 18rem;
+            line-height: 1;
+            color: rgba(230, 189, 99, 0.035);
+            pointer-events: none;
+        }
+
+        .signature-inner {
+            display: grid;
+            grid-template-columns:1.15fr .85fr;
+            gap: 70px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature .eyebrow {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: .82rem;
+            letter-spacing: .16em;
+            margin-bottom: 18px;
+        }
+
+        .signature h2 {
+            font-weight: 500;
+            font-size: clamp(2rem, 4.5vw, 3.25rem);
+            line-height: 1.12;
+            color: var(--gold-soft);
+        }
+
+        .signature h2 em {
+            color: var(--cream);
+            font-weight: 400;
+        }
+
+        .signature-copy p {
+            margin-top: 24px;
+            max-width: 560px;
+            color: rgba(244, 233, 213, .72);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .ritual-steps {
+            border-left: 1px solid rgba(230, 189, 99, .28);
+        }
+
+        .ritual-step {
+            display: grid;
+            grid-template-columns:48px 1fr;
+            column-gap: 18px;
+            padding: 20px 0 20px 26px;
+            border-bottom: 1px solid rgba(230, 189, 99, .16);
+        }
+
+        .ritual-step:last-child {
+            border-bottom: none;
+        }
+
+        .ritual-step span {
+            grid-row: 1 / span 2;
+            color: var(--gold);
+            font-family: 'Fraunces', serif;
+            font-size: .9rem;
+        }
+
+        .ritual-step b {
+            color: var(--gold-soft);
+            font-size: .8rem;
+            letter-spacing: .16em;
+        }
+
+        .ritual-step small {
+            margin-top: 5px;
+            color: rgba(244, 233, 213, .58);
+            font-size: .84rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 760px) {
+            .signature-inner {
+                grid-template-columns:1fr;
+                gap: 46px;
+            }
+
+            .ritual-steps {
+                border-left: none;
+                border-top: 1px solid rgba(230, 189, 99, .28);
+            }
+
+            .ritual-step {
+                padding-left: 0;
+            }
+        }
+
+        /* ---------- INSTAGRAM ---------- */
+
+        .instagram-section {
+            padding: 100px 28px;
+            background: var(--bg);
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-section::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 150, 47, 0.08);
+            top: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .instagram-inner {
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .instagram-eyebrow {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: .82rem;
+            letter-spacing: .16em;
+            margin-bottom: 18px;
+        }
+
+        .instagram-section h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            color: var(--text);
+            line-height: 1.15;
+        }
+
+        .instagram-section h2 em {
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        .instagram-section p {
+            max-width: 540px;
+            margin: 20px auto 30px;
+            color: var(--text-soft);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .instagram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 26px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .92rem;
+            transition: all .3s ease;
+        }
+
+        .instagram-btn:hover {
+            background: var(--gold);
+            color: var(--maroon-deep);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px -12px rgba(201, 150, 47, .5);
+        }
+
+        .instagram-icon {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+        }
+
+        .instagram-handle {
+            margin-top: 18px !important;
+            margin-bottom: 0 !important;
+            font-family: 'Fraunces', serif;
+            font-size: .95rem !important;
+            color: var(--gold) !important;
+            letter-spacing: .04em;
+        }
+
+        @media (max-width: 560px) {
+
+            .instagram-section {
+                padding: 80px 24px;
+            }
+
+            .instagram-btn {
+                padding: 14px 20px;
+            }
+        }
+
+        /* ---------- ORDER ---------- */
+
+        .order {
+            background: radial-gradient(
+                    ellipse 800px 500px at 50% 0%,
+                    var(--maroon-mid),
+                    var(--maroon-deep)
+            );
+            color: var(--cream);
+            padding: 110px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(
+                    rgba(230, 189, 99, 0.4) 0.6px,
+                    transparent 0.6px
+            );
+            background-size: 24px 24px;
+            opacity: 0.05;
+        }
+
+        .order h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .order p {
+            color: var(--gold-soft);
+            max-width: 520px;
+            margin: 0 auto 20px;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .order-channels {
+            max-width: 560px;
+            margin: 44px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+        }
+
+        .channel-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            border-radius: 4px;
+            background: rgba(250, 243, 230, 0.04);
+            border: 1px solid rgba(230, 189, 99, 0.25);
+            text-decoration: none;
+            color: var(--cream);
+            text-align: left;
+            transition: transform 0.25s ease,
+            background 0.25s ease,
+            border-color 0.25s ease;
+        }
+
+        .channel-btn:hover {
+            transform: translateX(4px);
+            background: rgba(230, 189, 99, 0.09);
+            border-color: var(--gold-bright);
+        }
+
+        .channel-icon {
+            width: 42px;
+            height: 42px;
+            flex: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(230, 189, 99, 0.12);
+        }
+
+        .channel-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .channel-text {
+            flex: 1;
+        }
+
+        .channel-name {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--gold-soft);
+        }
+
+        .channel-desc {
+            font-size: 0.82rem;
+            color: var(--cream);
+            opacity: 0.65;
+            margin-top: 2px;
+        }
+
+        .channel-arrow {
+            color: var(--gold);
+            font-size: 1.1rem;
+            transition: transform 0.25s ease;
+        }
+
+        .channel-btn:hover .channel-arrow {
+            transform: translateX(3px);
+        }
+
+        .payment-note {
+            max-width: 520px;
+            margin: 36px auto 0;
+            padding: 20px 22px;
+            border: 1px dashed rgba(230, 189, 99, 0.3);
+            border-radius: 4px;
+            font-size: 0.87rem;
+            color: var(--gold-soft);
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .payment-note b {
+            color: var(--cream);
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            background: var(--bg);
+            padding: 48px 28px 34px;
+            text-align: center;
+        }
+
+        .foot-brand {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--text);
+            letter-spacing: 0.02em;
+        }
+
+        .foot-meta {
+            color: var(--text-soft);
+            font-size: 0.86rem;
+            margin-top: 12px;
+            line-height: 1.8;
+        }
+
+        .foot-links {
+            margin-top: 18px;
+            display: flex;
+            gap: 22px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .foot-links a {
+            color: var(--text-soft);
+            text-decoration: none;
+            font-size: 0.86rem;
+            border-bottom: 1px solid transparent;
+            transition: color 0.2s ease,
+            border-color 0.2s ease;
+        }
+
+        .foot-links a:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        @media (max-width: 560px) {
+
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .menu-item-price {
+                order: -1;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ---------- LOADER ---------- -->
+
+<div aria-hidden="true" id="seal">
+    <div>
+
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+
+            <path
+                    class="pot-outline"
+                    d="M40 68 C40 54, 52 44, 70 44 C88 44, 100 54, 100 68 L96 96 C95 105, 84 112, 70 112 C56 112, 45 105, 44 96 Z"
+            />
+
+            <ellipse
+                    class="pot-outline"
+                    cx="70"
+                    cy="68"
+                    rx="26"
+                    ry="8"
+            />
+
+            <path
+                    class="steam-line s1"
+                    d="M58 40 C56 32, 62 29, 60 21"
+            />
+
+            <path
+                    class="steam-line s2"
+                    d="M70 40 C68 31, 74 28, 72 19"
+            />
+
+            <path
+                    class="steam-line s3"
+                    d="M82 40 C80 32, 86 29, 84 21"
+            />
+
+        </svg>
+
+        <div class="seal-word">
+            SEALED FOR AROMA
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ---------- NAVIGATION ---------- -->
+
+<nav>
+
+    <div class="nav-mark">
+        DECCAN HANDI
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#menu">
+            Menu
+        </a>
+
+        <a
+                href="https://www.instagram.com/deccanhandi/"
+                rel="noopener"
+                target="_blank"
+        >
+            Instagram
+        </a>
+
+        <a href="#story">
+            Our Ritual
+        </a>
+
+        <a href="#order">
+            Order
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ---------- HERO ---------- -->
+
+<section class="hero" id="heroSection">
+
+    <div class="grain-arc arc2"></div>
+    <div class="grain-arc"></div>
+
+    <div
+            class="steam-field"
+            id="steamField"
+    ></div>
+
+
+    <div class="emblem">
+
+        <svg
+                viewBox="0 0 120 120"
+                xmlns="http://www.w3.org/2000/svg"
+        >
+
+            <circle
+                    cx="60"
+                    cy="60"
+                    fill="none"
+                    opacity="0.5"
+                    r="58"
+                    stroke="#e6bd63"
+                    stroke-width="1.2"
+            />
+
+            <path
+                    d="M38 58 C38 46, 48 38, 60 38 C72 38, 82 46, 82 58 L79 82 C78 90, 70 96, 60 96 C50 96, 42 90, 41 82 Z"
+                    fill="none"
+                    stroke="#e6bd63"
+                    stroke-width="2.2"
+            />
+
+            <ellipse
+                    cx="60"
+                    cy="58"
+                    fill="none"
+                    rx="22"
+                    ry="7"
+                    stroke="#e6bd63"
+                    stroke-width="2"
+            />
+
+            <path
+                    d="M46 40 C46 32, 74 32, 74 40"
+                    fill="none"
+                    stroke="#e6bd63"
+                    stroke-width="2"
+            />
+
+            <path
+                    d="M52 30 C50 24, 55 22, 53 16"
+                    fill="none"
+                    opacity="0.85"
+                    stroke="#e6bd63"
+                    stroke-linecap="round"
+                    stroke-width="1.6"
+            />
+
+            <path
+                    d="M60 30 C58 23, 63 21, 61 14"
+                    fill="none"
+                    stroke="#e6bd63"
+                    stroke-linecap="round"
+                    stroke-width="1.6"
+            />
+
+            <path
+                    d="M68 30 C66 24, 71 22, 69 16"
+                    fill="none"
+                    opacity="0.85"
+                    stroke="#e6bd63"
+                    stroke-linecap="round"
+                    stroke-width="1.6"
+            />
+
+        </svg>
+
+    </div>
+
+
+    <h1 class="brandmark">
+        DECCAN <em>Handi</em>
+    </h1>
+
+
+    <div class="kicker">
+        LEGACY DUM &nbsp;·&nbsp; CURATED MENU &nbsp;·&nbsp; HEAPED AROMA
+    </div>
+
+
+    <div class="hero-line"></div>
+
+
+    <p class="tagline">
+        At Deccan Handi, biryani isn't just a dish — it's a ritual.
+        From the first layer of fragrant rice to the final seal of the
+        handi, we believe great flavour takes time. Our small menu keeps
+        the focus where it belongs: on hot, aromatic biryani and bold
+        chicken starters made with soul.
+    </p>
+
+
+    <div class="cta-row">
+
+        <a
+                class="btn btn-gold btn-seal"
+                href="#order"
+        >
+            Order Now
+        </a>
+
+        <a
+                class="btn btn-line"
+                href="#menu"
+        >
+            See the menu
+        </a>
+
+    </div>
+
+
+    <div class="dum-ticker">
+
+        <span class="dum-dot"></span>
+
+        <span>
+        SEALED FOR FRESHNESS · SLOW-STEAMED · SERVED HOT
+      </span>
+
+    </div>
+
+
+    <div class="scroll-cue">
+
+        <svg
+                fill="none"
+                viewBox="0 0 18 26"
+        >
+            <rect
+                    height="24"
+                    rx="8"
+                    stroke-width="1.4"
+                    width="16"
+                    x="1"
+                    y="1"
+            />
+
+            <circle
+                    cx="9"
+                    cy="8"
+                    fill="#c9962f"
+                    r="1.6"
+            />
+
+        </svg>
+
+    </div>
+
+</section>
+
+
+<!-- ---------- OUR KITCHEN ---------- -->
+
+<section
+        class="about"
+        id="story"
+>
+
+    <div class="about-inner reveal">
+
+        <div class="eyebrow">
+            OUR KITCHEN
+        </div>
+
+        <h2>
+            One pot. One seal. No shortcuts — only time.
+        </h2>
+
+        <p>
+            Deccan Handi runs a tight, focused kitchen — five biryanis,
+            two sides, done properly, instead of fifty dishes done in a hurry.
+            Every handi is sealed with dough and cooked on dum, so the rice
+            finishes in the meat's own steam, not a shortcut sauce.
+        </p>
+
+    </div>
+
+
+    <div class="dish-strip">
+
+        <!-- Chicken Dum -->
+
+        <div class="dish-card reveal reveal-delay-1">
+
+            <div class="dish-art">
+
+                <svg
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                >
+
+                    <ellipse
+                            cx="50"
+                            cy="62"
+                            fill="none"
+                            rx="34"
+                            ry="14"
+                            stroke="#c9962f"
+                            stroke-width="1.6"
+                    />
+
+                    <path
+                            d="M20 60 C20 45 33 34 50 34 C67 34 80 45 80 60"
+                            fill="none"
+                            stroke="#c9962f"
+                            stroke-width="1.6"
+                    />
+
+                    <ellipse
+                            cx="35"
+                            cy="55"
+                            fill="#c9962f"
+                            opacity="0.55"
+                            rx="4"
+                            ry="2.6"
+                    />
+
+                    <ellipse
+                            cx="50"
+                            cy="50"
+                            fill="#c9962f"
+                            opacity="0.75"
+                            rx="4.5"
+                            ry="2.8"
+                    />
+
+                    <ellipse
+                            cx="65"
+                            cy="56"
+                            fill="#c9962f"
+                            opacity="0.55"
+                            rx="4"
+                            ry="2.6"
+                    />
+
+                    <ellipse
+                            cx="42"
+                            cy="61"
+                            fill="#c9962f"
+                            opacity="0.4"
+                            rx="4.2"
+                            ry="2.7"
+                    />
+
+                    <ellipse
+                            cx="58"
+                            cy="62"
+                            fill="#c9962f"
+                            opacity="0.4"
+                            rx="4.2"
+                            ry="2.7"
+                    />
+
+                    <path
+                            d="M44 38 C42 32 47 30 45 24"
+                            fill="none"
+                            opacity="0.7"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.3"
+                    />
+
+                    <path
+                            d="M56 38 C54 32 59 30 57 24"
+                            fill="none"
+                            opacity="0.7"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.3"
+                    />
+
+                </svg>
+
+            </div>
+
+            <div class="dish-label">
+                Classic Chicken Dum Biryani
+            </div>
+
+        </div>
+
+
+        <!-- Boneless -->
+
+        <div class="dish-card reveal reveal-delay-2">
+
+            <div class="dish-art">
+
+                <svg
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                >
+
+                    <ellipse
+                            cx="50"
+                            cy="62"
+                            fill="none"
+                            rx="34"
+                            ry="14"
+                            stroke="#c9962f"
+                            stroke-width="1.6"
+                    />
+
+                    <path
+                            d="M20 60 C20 45 33 34 50 34 C67 34 80 45 80 60"
+                            fill="none"
+                            stroke="#c9962f"
+                            stroke-width="1.6"
+                    />
+
+                    <circle
+                            cx="38"
+                            cy="53"
+                            fill="#c9962f"
+                            opacity="0.6"
+                            r="3.4"
+                    />
+
+                    <circle
+                            cx="50"
+                            cy="48"
+                            fill="#c9962f"
+                            opacity="0.8"
+                            r="3.6"
+                    />
+
+                    <circle
+                            cx="62"
+                            cy="54"
+                            fill="#c9962f"
+                            opacity="0.6"
+                            r="3.4"
+                    />
+
+                    <circle
+                            cx="45"
+                            cy="60"
+                            fill="#c9962f"
+                            opacity="0.45"
+                            r="3.2"
+                    />
+
+                    <circle
+                            cx="57"
+                            cy="61"
+                            fill="#c9962f"
+                            opacity="0.45"
+                            r="3.2"
+                    />
+
+                    <path
+                            d="M48 38 C46 32 51 30 49 24"
+                            fill="none"
+                            opacity="0.7"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.3"
+                    />
+
+                </svg>
+
+            </div>
+
+            <div class="dish-label">
+                Boneless Dum Special
+            </div>
+
+        </div>
+
+
+        <!-- Fry Piece -->
+
+        <div class="dish-card reveal reveal-delay-3">
+
+            <div class="dish-art">
+
+                <svg
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                >
+
+                    <ellipse
+                            cx="50"
+                            cy="62"
+                            fill="none"
+                            rx="34"
+                            ry="14"
+                            stroke="#c9962f"
+                            stroke-width="1.6"
+                    />
+
+                    <path
+                            d="M20 60 C20 45 33 34 50 34 C67 34 80 45 80 60"
+                            fill="none"
+                            stroke="#c9962f"
+                            stroke-width="1.6"
+                    />
+
+                    <path
+                            d="M32 52 l6 6 m-6 0 l6 -6"
+                            opacity="0.65"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.4"
+                    />
+
+                    <path
+                            d="M47 47 l6 6 m-6 0 l6 -6"
+                            opacity="0.8"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.4"
+                    />
+
+                    <path
+                            d="M62 53 l6 6 m-6 0 l6 -6"
+                            opacity="0.65"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.4"
+                    />
+
+                    <path
+                            d="M40 61 l5 5 m-5 0 l5 -5"
+                            opacity="0.45"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.3"
+                    />
+
+                    <path
+                            d="M55 62 l5 5 m-5 0 l5 -5"
+                            opacity="0.45"
+                            stroke="#c9962f"
+                            stroke-linecap="round"
+                            stroke-width="1.3"
+                    />
+
+                </svg>
+
+            </div>
+
+            <div class="dish-label">
+                Crisp Fry Piece Biryani
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ---------- SIGNATURE RITUAL ---------- -->
+
+<section class="signature reveal">
+
+    <div class="signature-inner wrap">
+
+        <div class="signature-copy">
+
+            <div class="eyebrow">
+                THE DECCAN RITUAL
+            </div>
+
+            <h2 class="display">
+                You don't just eat the biryani.<br>
+                <em>You lift the lid on a moment.</em>
+            </h2>
+
+            <p>
+                From the first lift of the lid to the last grain of rice,
+                every order is designed around aroma, texture and that
+                unmistakable dum finish.
+            </p>
+
+        </div>
+
+
+        <div class="ritual-steps">
+
+            <div class="ritual-step">
+                <span>01</span>
+                <b>MARINATE</b>
+                <small>Deep flavour, never rushed.</small>
+            </div>
+
+            <div class="ritual-step">
+                <span>02</span>
+                <b>LAYER</b>
+                <small>Rice, chicken &amp; spice in balance.</small>
+            </div>
+
+            <div class="ritual-step">
+                <span>03</span>
+                <b>SEAL</b>
+                <small>Steam locked in. Aroma locked in.</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ---------- MENU ---------- -->
+
+<section
+        class="menu"
+        id="menu"
+>
+
+    <div class="wrap">
+
+        <div class="section-head reveal">
+
+            <div class="eyebrow">
+                THE HANDI MENU
+            </div>
+
+            <h2>
+                What we're cooking today
+            </h2>
+
+        </div>
+
+
+        <div class="menu-list">
+
+            <div class="menu-item reveal reveal-delay-1">
+
+                <div>
+
+                    <div class="menu-item-name">
+                        Classic Chicken Dum Biryani
+
+                        <span class="spice-tag">
+                CLASSIC
+              </span>
+                    </div>
+
+                    <div class="menu-item-desc">
+                        Bone-in chicken layered with aged basmati,
+                        slow-steamed to capture the masala and smoke.
+                    </div>
+
+                </div>
+
+                <div class="menu-item-price">
+                    ₹230
+                </div>
+
+            </div>
+
+
+            <div class="menu-item reveal reveal-delay-2">
+
+                <div>
+
+                    <div class="menu-item-name">
+                        Boneless Dum Special
+
+                        <span class="spice-tag">
+                BESTSELLER
+              </span>
+                    </div>
+
+                    <div class="menu-item-desc">
+                        Tender boneless morsels marinated overnight in our
+                        signature spice mix, layered and dum-sealed for tenderness.
+                    </div>
+
+                </div>
+
+                <div class="menu-item-price">
+                    ₹260
+                </div>
+
+            </div>
+
+
+            <div class="menu-item reveal reveal-delay-3">
+
+                <div>
+
+                    <div class="menu-item-name">
+                        Crisp Fry Piece Biryani
+                    </div>
+
+                    <div class="menu-item-desc">
+                        Crunchy fried chicken folded into aromatic dum rice
+                        for a contrast of texture and steam-kissed spice.
+                    </div>
+
+                </div>
+
+                <div class="menu-item-price">
+                    ₹250
+                </div>
+
+            </div>
+
+
+            <div class="menu-item reveal reveal-delay-4">
+
+                <div>
+
+                    <div class="menu-item-name">
+                        Spiced Chilli Chicken
+                    </div>
+
+                    <div class="menu-item-desc">
+                        Wok-fried in a bold chilli-garlic glaze —
+                        a fiery companion to the mellow dum rice.
+                    </div>
+
+                </div>
+
+                <div class="menu-item-price">
+                    ₹230
+                </div>
+
+            </div>
+
+
+            <div class="menu-item reveal reveal-delay-4">
+
+                <div>
+
+                    <div class="menu-item-name">
+                        Pepper Chicken
+                    </div>
+
+                    <div class="menu-item-desc">
+                        Coarse black pepper, curry leaf, slow-fried dry —
+                        built for biryani or on its own.
+                    </div>
+
+                </div>
+
+                <div class="menu-item-price">
+                    ₹220
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ---------- INSTAGRAM ---------- -->
+
+<section class="instagram-section">
+
+    <div class="instagram-inner reveal">
+
+        <div class="instagram-eyebrow">
+            FOLLOW THE HANDI
+        </div>
+
+        <h2>
+            From our kitchen<br>
+            <em>to your feed.</em>
+        </h2>
+
+        <p>
+            Behind the scenes, fresh batches, steaming biryani,
+            crispy chicken and everything happening at Deccan Handi.
+            Follow us and be part of the journey.
+        </p>
+
+        <a
+                class="instagram-btn"
+                href="https://www.instagram.com/deccanhandi/"
+                rel="noopener"
+                target="_blank"
+        >
+
+        <span class="instagram-icon">
+          ◎
+        </span>
+
+            Follow @deccanhandi
+
+            <span>
+          →
+        </span>
+
+        </a>
+
+        <p class="instagram-handle">
+            @deccanhandi
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ---------- ORDER ---------- -->
+
+<section
+        class="order"
+        id="order"
+>
+
+    <h2 class="reveal">
+        Sealed fresh, opened at your door
+    </h2>
+
+    <p class="reveal reveal-delay-1">
+        Choose your favourite biryani and order online through
+        our delivery partners.
+    </p>
+
+
+    <div class="order-channels reveal reveal-delay-2">
+
+
+        <!-- SWIGGY -->
+
+        <a
+                class="channel-btn"
+                href="https://www.swiggy.com/"
+                rel="noopener"
+                target="_blank"
+        >
+
+        <span class="channel-icon">
+
+          <svg
+                  fill="none"
+                  stroke="#e6bd63"
+                  stroke-width="1.6"
+                  viewBox="0 0 24 24"
+          >
+
+            <path
+                    d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z"
+            />
+
+            <path
+                    d="M9 12h6M12 9v6"
+            />
+
+          </svg>
+
+        </span>
+
+
+            <span class="channel-text">
+
+          <span class="channel-name">
+            Order on Swiggy
+          </span>
+
+          <span class="channel-desc">
+            Search "Deccan Handi" · pay online, tracked delivery
+          </span>
+
+        </span>
+
+
+            <span class="channel-arrow">
+          →
+        </span>
+
+        </a>
+
+
+        <!-- ZOMATO -->
+
+        <a
+                class="channel-btn"
+                href="https://www.zomato.com/"
+                rel="noopener"
+                target="_blank"
+        >
+
+        <span class="channel-icon">
+
+          <svg
+                  fill="none"
+                  stroke="#e6bd63"
+                  stroke-width="1.6"
+                  viewBox="0 0 24 24"
+          >
+
+            <circle
+                    cx="12"
+                    cy="12"
+                    r="8"
+            />
+
+            <path
+                    d="M9 10a3 3 0 0 1 6 0c0 2-3 2.5-3 4.5"
+            />
+
+            <circle
+                    cx="12"
+                    cy="17.2"
+                    fill="#e6bd63"
+                    r="0.6"
+                    stroke="none"
+            />
+
+          </svg>
+
+        </span>
+
+
+            <span class="channel-text">
+
+          <span class="channel-name">
+            Order on Zomato
+          </span>
+
+          <span class="channel-desc">
+            Search "Deccan Handi" · pay online, tracked delivery
+          </span>
+
+        </span>
+
+
+            <span class="channel-arrow">
+          →
+        </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ---------- FOOTER ---------- -->
+
+<footer>
+
+    <div class="foot-brand">
+        DECCAN HANDI
+    </div>
+
+    <div class="foot-meta">
+        Dum biryani, cooked to order · Serving Bengaluru
+        <br>
+        Find us on Swiggy &amp; Zomato
+    </div>
+
+
+    <div class="foot-links">
+
+        <a href="#menu">
+            Menu
+        </a>
+
+        <a href="#order">
+            Order
+        </a>
+
+        <a
+                href="https://www.instagram.com/deccanhandi/"
+                rel="noopener"
+                target="_blank"
+        >
+            Instagram
+        </a>
+
+    </div>
+
+</footer>
+
+
+<!-- ---------- JAVASCRIPT ---------- -->
+
+<script>
+
+    /* ---------- SCROLL REVEALS ---------- */
+
+    const io = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(
+                e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in');
+                        io.unobserve(e.target);
+                    }
+                }
+            );
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+    document
+        .querySelectorAll('.reveal')
+        .forEach(
+            el => io.observe(el)
+        );
+
+
+    /* ---------- MOUSE REACTIVE STEAM ---------- */
+
+    const steamField =
+        document.getElementById('steamField');
+
+    const heroSection =
+        document.getElementById('heroSection');
+
+
+    if (
+        steamField &&
+        heroSection &&
+        window.matchMedia('(pointer:fine)').matches
+    ) {
+
+        const wispCount = 5;
+
+        const wisps = [];
+
+
+        for (
+            let i = 0;
+            i < wispCount;
+            i++
+        ) {
+
+            const w =
+                document.createElement('div');
+
+            w.className = 'wisp';
+
+            w.style.left =
+                (18 + i * 16) + '%';
+
+            w.style.top = '8%';
+
+            steamField.appendChild(w);
+
+            wisps.push(w);
+
+        }
+
+
+        heroSection.addEventListener(
+            'mousemove',
+            (e) => {
+
+                const rect =
+                    heroSection.getBoundingClientRect();
+
+                const relX =
+                    (e.clientX - rect.left) /
+                    rect.width - 0.5;
+
+
+                wisps.forEach(
+                    (w, i) => {
+
+                        const factor =
+                            (i - wispCount / 2) * 6;
+
+                        w.style.transform =
+                            `translateX(${relX * 30 + factor}px)
+                 rotate(${relX * 8}deg)`;
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
+
